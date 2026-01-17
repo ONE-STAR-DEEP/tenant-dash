@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Multi Tenant Sales dashboard
+A Multi-tenant sales dashboard built with `Next.js`,`Tailwind CSS`, and `ShadCN UI`. The application focuses on efficiently presenting leads data and call logs with a clean, maintainable component architecture.
 
-## Getting Started
 
-First, run the development server:
+## 🚀 Tech Stack
+Framework: Next.js
+Language: TypeScript
+UI Styling: Tailwind CSS, ShadCN UI
+Icons: Lucide React
+State Management: React Context
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Project Structure
+app/
+ ├─ layout.tsx        # Root layout and providers
+ ├─ page.tsx          # Entry page
+ ├─ globals.css       # Global styles
+ └─ favicon.ico
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+components/
+ ├─ ui/               # ShadCN UI components
+ ├─ app-sidebar.tsx   # Application sidebar
+ ├─ sidebar-trigger.tsx
+ ├─ callLog.tsx       # Tenant-filtered call logs
+ ├─ leadsList.tsx     # Tenant-filtered leads table
+ ├─ Loader.tsx        # Global loader
+ ├─ LoaderContext.tsx # Global loading state
+ ├─ TenantContext.tsx # Active tenant management
+ └─ RoleContext.tsx   # Role-based UI control
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+lib/
+ └─ data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+##  Tenancy Approach
+The application currently supports two organizations: Organization A and Organization B.
 
-## Learn More
+Both organizations have separate datasets that are stored in a centralized mock data source to simulate database fetches. The active organization is managed at the frontend level.
 
-To learn more about Next.js, take a look at the following resources:
+When switching between Organization A and Organization B, the dashboard dynamically updates to display data relevant to the selected organization.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+A search feature is provided to filter the displayed data based on:
+ID
+Name
+Phone number
+Status
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+All filtering is performed on the client side while remaining scoped to the active organization.
 
-## Deploy on Vercel
+## Role Switch
+Since there is no authentication system or backend role management, role switching is implemented entirely on the frontend using React Context.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+When the Admin role is selected, the interface displays Edit actions for the corresponding records.
+When the Agent role is selected, the interface restricts actions to View-only access.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This approach simulates role-based UI behavior commonly found in real-world applications, while keeping the implementation frontend-focused.
+
+## To Run the Project
+Install dependencies using npm install and start the development server with npm run dev. The application will run on http://localhost:3000
+
